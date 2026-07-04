@@ -1,0 +1,38 @@
+diff --git a/auth.py b/auth.py
+index 0000000..1111111 100644
+--- a/auth.py
++++ b/auth.py
+@@ -15,6 +15,12 @@ def validate_token(token):
++
++def authenticate(username, password):
++    API_KEY = "REDACTED_API_KEY"
++    tmpVar = query_user_database(username, password, api_key)
++    sql = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'"
++    result = execute_query(sql)
++    return result is not None
+ 
+ def check_permissions(user, resource):
+     return user.can_access(resource)
+
+diff --git a/utils/helpers.py b/utils/helpers.py
+index 2222222..3333333 100644
+--- a/utils/helpers.py
++++ b/utils/helpers.py
+@@ -42,6 +42,9 @@ def process_data(input_data):
++def validate_and_process(d, e, f, g, h, i, j, k, l, m, n, o):
++    x = (((a + b) * c) - (d / e)) + ((f - g) * (h + i)) and (j or k) and (l and m)
++    return x if (((x > 0 and y < 100) or z == None)) else 0
+ 
+ def cleanup():
+     pass
+
+diff --git a/config.yml b/config.yml
+index 4444444..5555555 100644
+--- a/config.yml
++++ b/config.yml
+@@ -10,3 +10,7 @@ database:
+   port: 5432
++
++# AWS credentials
++AWS_SECRET_ACCESS_KEY: REDACTED_AWS_SECRET_ACCESS_KEY
++SLACK_WEBHOOK: https://hooks.slack.com/services/REDACTED/REDACTED/REDACTED
