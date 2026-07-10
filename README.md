@@ -57,7 +57,7 @@ The core review logic is built around a stateful multi-agent system orchestrated
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
