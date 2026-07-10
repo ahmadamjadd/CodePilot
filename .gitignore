@@ -10,3 +10,18 @@ build/
 dist/
 .env
 .DS_Store
+
+# CodePilot Build and Zip artifacts
+deployment/
+*.zip
+
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform.lock.hcl
+
+# IDE settings
+.vscode/
+.idea/

@@ -172,6 +172,19 @@ class SecurityAgent:
 
             fid = item.get("id") or self._make_id(json.dumps(item))
 
+            try:
+                confidence = float(item.get("confidence", 0.7))
+            except (ValueError, TypeError):
+                conf_str = str(item.get("confidence", "")).lower()
+                if "high" in conf_str:
+                    confidence = 0.9
+                elif "medium" in conf_str:
+                    confidence = 0.7
+                elif "low" in conf_str:
+                    confidence = 0.4
+                else:
+                    confidence = 0.7
+
             findings.append(
                 SecurityFinding(
                     id=fid,
@@ -181,7 +194,7 @@ class SecurityAgent:
                     file_path=item.get("file_path"),
                     line_start=item.get("line_start"),
                     line_end=item.get("line_end"),
-                    confidence=float(item.get("confidence", 0.5)),
+                    confidence=confidence,
                     recommendation=item.get("recommendation"),
                     metadata=item.get("metadata", {}),
                 )

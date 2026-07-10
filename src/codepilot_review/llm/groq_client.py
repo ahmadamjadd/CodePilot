@@ -23,9 +23,9 @@ class GroqClient(LLMClient):
         model: Optional[str] = None,
         timeout: int = 30,
     ) -> None:
-        self.api_key = api_key or settings.grok_api_key
-        self.base_url = (base_url or settings.grok_api_base_url or "https://api.groq.com/openai/v1").rstrip("/")
-        self.model = model or settings.grok_model
+        self.api_key = api_key or settings.groq_api_key
+        self.base_url = (base_url or settings.groq_api_base_url or "https://api.groq.com/openai/v1").rstrip("/")
+        self.model = model or settings.groq_model
         self.timeout = timeout
         self._client = httpx.Client(timeout=self.timeout)
 
@@ -41,13 +41,18 @@ class GroqClient(LLMClient):
 
         model = kwargs.pop("model", self.model)
         if not model:
-            raise RuntimeError("A Groq model name is required. Set GROK_MODEL in .env or pass model=...")
+            raise RuntimeError("A Groq model name is required. Set GROQ_MODEL in .env or pass model=...")
+
+        system_prompt = kwargs.pop("system_prompt", None)
+
+        messages: list[Dict[str, str]] = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
 
         payload: Dict[str, Any] = {
             "model": model,
-            "messages": [
-                {"role": "user", "content": prompt},
-            ],
+            "messages": messages,
         }
 
         params = kwargs.pop("params", None)
@@ -58,3 +63,4 @@ class GroqClient(LLMClient):
         resp = self._client.post(url, json=payload, headers=self._headers())
         resp.raise_for_status()
         return resp.json()
+

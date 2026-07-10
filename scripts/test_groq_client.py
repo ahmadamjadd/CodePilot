@@ -1,6 +1,6 @@
-"""Simple test runner for the Grok client.
+"""Simple test runner for the Groq client.
 
-This script attempts a live request only if `GROK_API_KEY` is set in `.env`.
+This script attempts a live request only if `GROQ_API_KEY` is set in `.env`.
 It is safe to run without credentials; it will skip the live call and exit 0.
 """
 from __future__ import annotations
@@ -11,7 +11,7 @@ from codepilot_review.llm.groq_client import GroqClient
 
 
 def main() -> None:
-    if not settings.grok_api_key:
+    if not settings.groq_api_key:
         print("GROQ API key not set in .env; skipping live Groq request.")
         return
 

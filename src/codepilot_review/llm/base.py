@@ -7,7 +7,7 @@ from typing import Any, Dict
 class LLMClient(ABC):
     """Abstract LLM client interface.
 
-    Implementations (Grok, Bedrock) should provide a `generate` method that
+    Implementations (Groq, Bedrock) should provide a `generate` method that
     returns the raw provider response as a dict.
     """
 
